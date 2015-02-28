@@ -1,0 +1,3 @@
+g6_friends_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: G6FriendsBundle:Default:index }

@@ -1,3 +1,7 @@
+g6_friends:
+    resource: "@G6FriendsBundle/Resources/config/routing.yml"
+    prefix:   /
+
 app:
     resource: @AppBundle/Controller/
     type:     annotation

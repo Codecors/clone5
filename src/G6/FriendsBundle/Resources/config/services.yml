@@ -1,0 +1,4 @@
+services:
+#    g6_friends.example:
+#        class: G6\FriendsBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
