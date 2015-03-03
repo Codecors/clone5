@@ -1,0 +1,45 @@
+G6\FriendsBundle\Entity\Comment:
+    type: entity
+    table: comment
+    indexes:
+        post_id:
+            columns:
+                - post_id
+    id:
+        commentId:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+            id: true
+            column: comment_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        content:
+            type: text
+            nullable: false
+            length: null
+            fixed: false
+            comment: ''
+        likes:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+        commentDate:
+            type: date
+            nullable: false
+            comment: ''
+            column: comment_date
+    manyToOne:
+        post:
+            targetEntity: Post
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                post_id:
+                    referencedColumnName: post_id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

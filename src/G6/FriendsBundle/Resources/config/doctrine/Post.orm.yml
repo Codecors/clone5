@@ -1,0 +1,46 @@
+G6\FriendsBundle\Entity\Post:
+    type: entity
+    table: post
+    indexes:
+        username:
+            columns:
+                - username
+    id:
+        postId:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+            id: true
+            column: post_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        postContent:
+            type: text
+            nullable: false
+            length: null
+            fixed: false
+            comment: ''
+            column: post_content
+        postDate:
+            type: date
+            nullable: false
+            comment: ''
+            column: post_date
+        likes:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+    manyToOne:
+        username:
+            targetEntity: User
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                username:
+                    referencedColumnName: username
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

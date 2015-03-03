@@ -1,0 +1,51 @@
+G6\FriendsBundle\Entity\User:
+    type: entity
+    table: user
+    id:
+        username:
+            type: string
+            nullable: false
+            length: 100
+            fixed: false
+            comment: ''
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        password:
+            type: string
+            nullable: false
+            length: 50
+            fixed: false
+            comment: ''
+        firstName:
+            type: string
+            nullable: false
+            length: 100
+            fixed: false
+            comment: ''
+            column: first_name
+        lastName:
+            type: string
+            nullable: false
+            length: 100
+            fixed: false
+            comment: ''
+            column: last_name
+        birthdate:
+            type: date
+            nullable: false
+            comment: ''
+        gender:
+            type: string
+            nullable: false
+            length: 10
+            fixed: false
+            comment: ''
+        notes:
+            type: text
+            nullable: true
+            length: null
+            fixed: false
+            comment: ''
+    lifecycleCallbacks: {  }
