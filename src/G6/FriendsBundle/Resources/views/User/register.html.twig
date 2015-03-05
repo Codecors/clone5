@@ -1,0 +1,32 @@
+{# empty Twig template #}
+
+This is register
+
+<form action="register" method="POST">
+    Username:<input type="text" name="username">
+    <br>
+    Password:<input type="text" name="password">
+    <br>
+    Re-enter password:<input type="text" name="repassword">
+    <br>  
+    Bithdate:<input type="date" name="birthdate" value="2015-01-01">
+    <br>
+    First name:<input type="text" name="firstname">
+    <br>
+    Last name:<input type="text" name="lastname" >
+    <br>
+    <input type="radio" name="gender" value="male" checked>Male
+    <input type="radio" name="gender" value="female">Female
+    <br><br>
+    <input type="submit" value="Register">
+</form>
+
+<br>
+
+{{dump(data)}}
+
+{% if  error == 1 %}
+   {{ errorMsg }}
+{% elseif success==1 %}
+   Register Success
+{% endif %}

@@ -1,0 +1,23 @@
+{# empty Twig template #}
+
+This is register
+
+<form action="newpost" method="POST">
+    Write a new post:
+    <br>
+    <textarea name="post_content" rows="10" cols="70"></textarea>
+    <br>
+    
+    <br><br>
+    <input type="submit" value="Post">
+</form>
+
+<br>
+
+{{dump(data)}}
+
+{% if  error == 1 %}
+   {{ errorMsg }}
+{% elseif success==1 %}
+   Register Success
+{% endif %}
