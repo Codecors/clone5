@@ -1,0 +1,80 @@
+<?php
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ * Description of CommonMethods
+ *
+ * @author Mirage
+ */
+
+namespace G6\FriendsBundle\Helper;
+
+use Symfony\Component\HttpFoundation\Session\Session;
+
+class CommonMethods {
+
+    static function validateLogin($requestData) {
+        return (isset($requestData['username']) && isset($requestData['password']));
+    }
+
+    static function validateRegister($requestData) {
+        return (isset($requestData['username']) &&
+                isset($requestData['password']) &&
+                isset($requestData['repassword']) &&
+                isset($requestData['birthdate']) &&
+                isset($requestData['firstname']) &&
+                isset($requestData['lastname']) &&
+                isset($requestData['gender']));
+    }
+
+    static function setSession($attr, $value) {
+        $session = new Session();
+        $session->start();
+        $session->set($attr, $value);
+    }
+
+    static function getSession($attr) {
+        $session = new Session();
+        $session->start();
+        return $session->get($attr);
+    }
+
+    static function postsToArray($postCollection) {
+        $finalPostArray = array();
+        foreach ($postCollection as $post) {
+
+            $comments = array();
+            foreach ($post->getComment() as $comment) {
+                $commentdata = array('comment_id' => $comment->getCommentId(),
+                    'comment_content' => $comment->getContent(),
+                    'comment_likes' => $comment->getLikes(),
+                    'comment_date' => $comment->getCommentDate(),
+                    'user' => $comment->getUser()
+                );
+                array_push($comments, $commentdata);
+            }
+
+            $postdata = array('post_id' => $post->getPostid(),
+                'post_content' => $post->getPostContent(),
+                'post_date' => $post->getPostDate(),
+                'post_likes' => $post->getLikes(),
+                'user' => $post->getUser(),
+                'comments' => $comments);
+
+            array_push($finalPostArray, $postdata);
+        }
+        return $finalPostArray;
+    }
+
+    static function getUserByUsername($username,$controller) {
+        $userRepository = $controller->getDoctrine()->getRepository('G6FriendsBundle:User');
+        $existingUser = $userRepository->findOneByUsername($username);
+        return $existingUser;
+    }
+
+}
