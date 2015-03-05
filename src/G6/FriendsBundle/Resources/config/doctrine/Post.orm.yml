@@ -4,7 +4,7 @@ G6\FriendsBundle\Entity\Post:
     indexes:
         username:
             columns:
-                - username
+                - user_id
     id:
         postId:
             type: integer
@@ -24,7 +24,7 @@ G6\FriendsBundle\Entity\Post:
             comment: ''
             column: post_content
         postDate:
-            type: date
+            type: datetime
             nullable: false
             comment: ''
             column: post_date
@@ -34,13 +34,17 @@ G6\FriendsBundle\Entity\Post:
             unsigned: false
             comment: ''
     manyToOne:
-        username:
+        user:
             targetEntity: User
             cascade: {  }
             mappedBy: null
             inversedBy: null
             joinColumns:
-                username:
-                    referencedColumnName: username
+                user_id:
+                    referencedColumnName: user_id
             orphanRemoval: false
+    oneToMany:
+        comment:
+            targetEntity: Comment
+            mappedBy: post
     lifecycleCallbacks: {  }

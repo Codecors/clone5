@@ -5,6 +5,9 @@ G6\FriendsBundle\Entity\Comment:
         post_id:
             columns:
                 - post_id
+        user_id:
+            columns:
+                - user_id
     id:
         commentId:
             type: integer
@@ -33,6 +36,15 @@ G6\FriendsBundle\Entity\Comment:
             comment: ''
             column: comment_date
     manyToOne:
+        user:
+            targetEntity: User
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                user_id:
+                    referencedColumnName: user_id
+            orphanRemoval: false
         post:
             targetEntity: Post
             cascade: {  }

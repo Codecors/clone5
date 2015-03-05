@@ -1,3 +1,23 @@
 g6_friends_homepage:
-    path:     /hello/{name}
+    path:     /
     defaults: { _controller: G6FriendsBundle:Default:index }
+    
+g6_friends_login:
+    path:     /login
+    defaults: { _controller: G6FriendsBundle:User:login }
+    
+g6_friends_logout:
+    path:     /logout
+    defaults: { _controller: G6FriendsBundle:User:logout }
+    
+g6_friends_register:
+    path:     /register
+    defaults: { _controller: G6FriendsBundle:User:register }
+    
+g6_friends_user:
+    path:     /user/{name}
+    defaults: { _controller: G6FriendsBundle:User:user }
+
+g6_friends_newpost:
+    path:     /newpost
+    defaults: { _controller: G6FriendsBundle:Post:new }

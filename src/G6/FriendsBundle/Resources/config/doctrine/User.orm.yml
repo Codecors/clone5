@@ -2,16 +2,22 @@ G6\FriendsBundle\Entity\User:
     type: entity
     table: user
     id:
+        userId:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+            id: true
+            column: user_id
+            generator:
+                strategy: IDENTITY
+    fields:
         username:
             type: string
             nullable: false
             length: 100
             fixed: false
             comment: ''
-            id: true
-            generator:
-                strategy: IDENTITY
-    fields:
         password:
             type: string
             nullable: false
@@ -48,4 +54,8 @@ G6\FriendsBundle\Entity\User:
             length: null
             fixed: false
             comment: ''
+    oneToMany:
+        post:
+            targetEntity: Post
+            mappedBy: user
     lifecycleCallbacks: {  }
