@@ -1,0 +1,55 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Mar 5, 2015, 4:24:36 PM
+    Author     : Mirage
+*/
+
+.post{
+    display: block;
+    border: solid black 1px;
+    width: 50vw;
+    margin: 5px auto;
+}
+
+.post-content{
+    margin: 0;
+}
+
+.post-date{
+    margin: 0;
+}
+
+.post-likes{
+    margin: 0;
+}
+.post-user{
+    margin: 0;
+    background-color: #6d6;
+}
+
+.comment{
+    display: block;
+    border: solid black 1px;
+    margin: 5px auto;
+    width: 30vw;
+}
+
+.comment-content{
+    margin: 0;
+}
+
+.comment-date{
+    margin: 0;
+}
+
+.comment-likes{
+    margin: 0;
+}
+.comment-user{
+    margin: 0;
+    background-color: #08C;
+}
