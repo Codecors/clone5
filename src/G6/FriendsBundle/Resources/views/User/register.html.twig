@@ -1,32 +1,120 @@
 {# empty Twig template #}
+{% include "G6FriendsBundle::header.html.twig" with {'title': 'Register','user':'','isLogin': 0} %}
 
-This is register
 
-<form action="register" method="POST">
-    Username:<input type="text" name="username">
-    <br>
-    Password:<input type="text" name="password">
-    <br>
-    Re-enter password:<input type="text" name="repassword">
-    <br>  
-    Bithdate:<input type="date" name="birthdate" value="2015-01-01">
-    <br>
-    First name:<input type="text" name="firstname">
-    <br>
-    Last name:<input type="text" name="lastname" >
-    <br>
-    <input type="radio" name="gender" value="male" checked>Male
-    <input type="radio" name="gender" value="female">Female
-    <br><br>
-    <input type="submit" value="Register">
-</form>
+{%if success==0 %}
+    <div class="row">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6">
+            <div class="well bs-component">
+                <form class="form-horizontal" action="register" method="POST">
+                    <fieldset>
+                        <legend>Register</legend>
+                        <div class="form-group">
+                            <label for="inputUsername" class="col-lg-2 control-label">Username</label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control" name="username" placeholder="Username">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword" class="col-lg-2 control-label">Password</label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control" name="password" placeholder="Password">                           
+                            </div>
+                        </div>
 
-<br>
+                        <div class="form-group">
+                            <label for="inputRePassword" class="col-lg-2 control-label"></label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control" name="repassword" placeholder="Re-enter Password">                           
+                            </div>
+                        </div>
 
-{{dump(data)}}
+                        <div class="form-group">
+                            <label for="inputFirstname" class="col-lg-2 control-label">First Name</label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control" name="firstname" placeholder="First Name">
+                            </div>
+                        </div>
 
-{% if  error == 1 %}
-   {{ errorMsg }}
-{% elseif success==1 %}
-   Register Success
+                        <div class="form-group">
+                            <label for="inputLastname" class="col-lg-2 control-label">Last Name</label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control" name="lastname" placeholder="Last Name">
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Gender</label>
+                            <div class="col-lg-10">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="gender" id="optionsRadios1" value="male" checked>
+                                        Male
+                                    </label>
+                                    <label></label>
+                                    <label>
+                                        <input type="radio" name="gender" id="optionsRadios2" value="female">
+                                        Female
+                                    </label>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputBirthdate" class="col-lg-2 control-label">Birthdate</label>
+                            <div class="col-lg-10">
+                                <input type="date" class="form-control" name="birthdate" value="2015-01-01" placeholder="Email">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-lg-10 col-lg-offset-2">
+
+                                <button type="submit" class="btn btn-primary">Register</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+
+            </div>
+        </div>
+    </div>
 {% endif %}
+
+{% if error==1 %}
+    <div class="row">
+        <div class="col-lg-4"></div>
+        <div class="col-lg-4">
+            <div class="alert alert-dismissible alert-danger"> 
+
+                <p class="text-center"><strong>{{ errorMsg }}</strong></p>
+
+            </div>
+        </div>
+    </div> 
+{% elseif success==1 %}
+    <div class="center-screen-login"></div>
+    <div class="row">
+        <div class="col-lg-4"></div>
+        <div class="col-lg-4">
+            <div class="alert alert-dismissible alert-info"> 
+
+                <p class="text-center"><strong>Register Success.Please <a href="{{ path('g6_friends_login') }}">Login</a> To Continue</strong></p>
+
+            </div>
+        </div>
+    </div> 
+{% endif %}
+
+
+{#{{dump(data)}}#}
+
+{#{% if  error == 1 %}
+    {{ errorMsg }}
+{% elseif success==1 %}
+    Register Success
+{% endif %}#}

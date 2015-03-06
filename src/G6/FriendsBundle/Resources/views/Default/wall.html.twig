@@ -1,25 +1,25 @@
 {# empty Twig template #}
-{% include "G6FriendsBundle::header.html.twig" with {'title': name ~ '\'s Wall','user':name,'isLogin': 1} %}
-
+{% include "G6FriendsBundle::header.html.twig" with {'title': 'Public Wall','user':name,'isLogin': 1} %}
 
 
 <div class="row">
     <div class="col-lg-3"></div>
     <div class="col-lg-6">
-        {% for post in posts %}
+        {% for post in allposts %}
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title post-user">{{post['user'].firstName}} {{post['user'].lastName}}</h3> 
                     <p class="post-date">{{post['post_date']|  date('Y-m-d')}} at {{post['post_date']|  date('h:i:s a')}}</p>                   
-                    <p class="post-likes">{{post['post_likes']}}</p>                 
+                    <p class="post-likes">{{post['post_likes']}}</p>
                     <a class="post-view" href="{{ path('g6_friends_post',{'id':post['post_id']}) }}">View </a>
                 </div>
                 <div class="panel-body">
-                    <p class="post-content">{{post['post_content']}}</p>                                    
+                    <p class="post-content">{{post['post_content']}}</p>
+                                    
                 </div>
 
                 {% for comment in post['comments'] %}
-                    <div class="panel-body panel-comment  comment">
+                    <div class="panel-body panel-comment comment">
                         <h4 class="comment-user">{{comment['user'].firstName}} {{comment['user'].lastName}}</h4>
                         <p class="comment-date">{{comment['comment_date']|date('Y-m-d')}} at {{comment['comment_date']|date('h:i:s a')}}</p>           
 
@@ -32,8 +32,7 @@
         {% endfor %}
     </div>
 </div>
-
-
-{{dump(posts)}}
-
+        
+{#        {{dump(allposts)}}#}
+        
 {% include "G6FriendsBundle::footer.html.twig" %}

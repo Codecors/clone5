@@ -1,23 +1,50 @@
 {# empty Twig template #}
 
-This is register
-
-<form action="newpost" method="POST">
-    Write a new post:
-    <br>
-    <textarea name="post_content" rows="10" cols="70"></textarea>
-    <br>
-    
-    <br><br>
-    <input type="submit" value="Post">
-</form>
+{% include "G6FriendsBundle::header.html.twig" with {'title': 'New Post','user':name,'isLogin': 1} %}
 
 <br>
+<div class="row">
+    <div class="col-lg-1"></div>
+    <div class="col-lg-10">
+        <div class="well bs-component">
+            <form class="form-horizontal" action="newpost" method="POST">
+                <fieldset>
+                    <legend>Write a new post</legend>
 
-{{dump(data)}}
+                    <div class="form-group">
 
-{% if  error == 1 %}
-   {{ errorMsg }}
-{% elseif success==1 %}
-   Register Success
+                        <div class="col-lg-12">
+                            <textarea class="form-control" name="post_content" rows="10"></textarea>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <div class="col-lg-3 col-lg-offset-11">                           
+                            <button type="submit" class="btn btn-primary">Post</button>
+                        </div>
+
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% if success==1 %}
+    <div class="row">
+        <div class="col-lg-4"></div>
+        <div class="col-lg-4">
+            <div class="alert alert-dismissible alert-success"> 
+                
+                <p class="text-center"><strong>Post successfull</strong></p>
+                
+            </div>
+        </div>
+    </div> 
 {% endif %}
+
+{#{{dump(data)}}#}
+{% include "G6FriendsBundle::footer.html.twig" %}

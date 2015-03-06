@@ -19,13 +19,13 @@ use G6\FriendsBundle\Helper\CommonMethods;
 class PostController extends Controller {
 
     public function newAction(Request $request) {
-        $sessionUser = CommonMethods::getSession('username');
+        $sessionUser = CommonMethods::getSession();
         $post = null;
         $error = 0;
         $errorMsg = '';
         $success = 0;
-        if (isset($sessionUser) == 0) {
-            return $this->redirect('../login');
+        if (isset($sessionUser['username']) == 0) {
+            return $this->redirect($this->generateUrl('g6_friends_login'));
         }
         if ($request->getMethod() == 'POST') {
             $newPostContent = $request->request->all();
@@ -34,15 +34,16 @@ class PostController extends Controller {
             $post->setLikes(0);
             $post->setPostContent($newPostContent['post_content']);
             $post->setPostDate(date_create(date('Y-m-d H:i:s')));
-            $post->setUser(CommonMethods::getUserByUsername($sessionUser, $this));
+            $post->setUser(CommonMethods::getUserByUsername($sessionUser['username'], $this));
 
 
             $em = $this->getDoctrine()->getManager();
 
             $em->persist($post);
             $em->flush();
+            $success =1;
         }
-        return $this->render('G6FriendsBundle:Post:newpost.html.twig', array('data' => $post, 'error' => $error, 'errorMsg' => $errorMsg, 'success' => $success));
+        return $this->render('G6FriendsBundle:Post:newpost.html.twig', array('data' => $post, 'error' => $error, 'errorMsg' => $errorMsg, 'success' => $success,'name'=>$sessionUser['name']));
     }
 
 }

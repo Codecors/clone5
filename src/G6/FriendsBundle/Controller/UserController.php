@@ -37,7 +37,7 @@ class UserController extends Controller {
             $user = $userRepository->findOneByUsername($requestData['username']);
 
             if (isset($user) && $user->getPassword() == $requestData['password']) {
-                CommonMethods::setSession('username', $user->getUsername());
+                CommonMethods::setSession('username', $user->getUsername(), 'name', $user->getFirstName() . ' ' . $user->getLastName());
                 return $this->redirect('user/' . $user->getUsername());
             } else {
                 $error = 1;
@@ -90,23 +90,65 @@ class UserController extends Controller {
 
     public function userAction($name) {
 
-        $sessionUser = CommonMethods::getSession('username');
-        if (isset($sessionUser) == 0) {
-            return $this->redirect('../login');
-        } else if ($sessionUser != $name) {
-            return $this->redirect('../user/' . $sessionUser);
+        $sessionUser = CommonMethods::getSession();
+        if (isset($sessionUser['username']) == 0) {
+            return $this->redirect($this->generateUrl('g6_friends_login'));
+        } else if ($sessionUser['username'] != $name) {
+            return $this->redirect($this->generateUrl('g6_friends_user', array('name' => $sessionUser['username'])));
         }
 
         $userRepository = $this->getDoctrine()->getRepository('G6FriendsBundle:User');
-        $user = $userRepository->findOneByUsername($sessionUser);
-        return $this->render('G6FriendsBundle:User:user.html.twig', array('posts' => CommonMethods::postsToArray($user->getPost()->toArray())));
+        $postRepository = $this->getDoctrine()->getRepository('G6FriendsBundle:Post');
+        $user = $userRepository->findOneByUsername($sessionUser['username']);
+        $posts = $postRepository->findBy(array('user' => $user->getUserId()), array('postDate' => 'DESC'));
+        return $this->render('G6FriendsBundle:User:user.html.twig', array('posts' => CommonMethods::postsToArray($posts), 'name' => $sessionUser['name']));
     }
 
     public function logoutAction() {
         $session = new Session();
         $session->clear();
         $session->invalidate();
-        return $this->redirect('login');
+        return $this->redirect($this->generateUrl('g6_friends_login'));
+    }
+
+    public function infoAction(Request $request) {
+        $sessionUser = CommonMethods::getSession();
+        if (isset($sessionUser['username']) == 0) {
+            return $this->redirect($this->generateUrl('g6_friends_login'));
+        }
+        $error = 0;
+        $errorMsg = '';
+        $success = 0;
+        $userRepository = $this->getDoctrine()->getRepository('G6FriendsBundle:User');
+        $user = $userRepository->findOneByUsername($sessionUser['username']);
+        if ($request->getMethod() == 'POST') {
+            $requestData = $request->request->all();
+
+            if (CommonMethods::validateUpdate($requestData) == 0) {
+                $error = 1;
+                $errorMsg = 'Something went wrong.Please refresh the page and try again.';
+                return $this->render('G6FriendsBundle:User:profileinfo.html.twig', array('user' => $user, 'error' => $error, 'errorMsg' => $errorMsg, 'success' => $success, 'name' => $sessionUser['name']));
+            }
+
+
+
+            $user->setFirstName($requestData['firstname']);
+            $user->setLastName($requestData['lastname']);
+
+            $user->setGender($requestData['gender']);
+            $user->setBirthdate(date_create($requestData['birthdate']));
+
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist($user);
+            $em->flush();
+            $success = 1;
+            $sessionUser['session']->set('name', $user->getFirstName() . ' ' . $user->getLastName());
+            return $this->render('G6FriendsBundle:User:profileinfo.html.twig', array('user' => $user, 'error' => $error, 'errorMsg' => $errorMsg, 'success' => $success, 'name' => $sessionUser['session']->get('name')));
+        }
+
+
+        return $this->render('G6FriendsBundle:User:profileinfo.html.twig', array('user' => $user, 'error' => $error, 'errorMsg' => $errorMsg, 'success' => $success, 'name' => $sessionUser['name']));
     }
 
 }

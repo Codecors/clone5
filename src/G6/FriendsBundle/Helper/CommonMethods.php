@@ -31,17 +31,25 @@ class CommonMethods {
                 isset($requestData['lastname']) &&
                 isset($requestData['gender']));
     }
-
-    static function setSession($attr, $value) {
-        $session = new Session();
-        $session->start();
-        $session->set($attr, $value);
+    
+    static function validateUpdate($requestData) {
+        return (isset($requestData['birthdate']) &&
+                isset($requestData['firstname']) &&
+                isset($requestData['lastname']) &&
+                isset($requestData['gender']));
     }
 
-    static function getSession($attr) {
+    static function setSession($attrUser, $valueUser,$attrName, $valueName) {
         $session = new Session();
         $session->start();
-        return $session->get($attr);
+        $session->set($attrUser, $valueUser);
+        $session->set($attrName, $valueName);
+    }
+
+    static function getSession() {
+        $session = new Session();
+        $session->start();
+        return array('username'=>$session->get('username'),'name'=>$session->get('name'),'session'=> $session);
     }
 
     static function postsToArray($postCollection) {

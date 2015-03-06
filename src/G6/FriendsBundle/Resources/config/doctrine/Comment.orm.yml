@@ -31,7 +31,7 @@ G6\FriendsBundle\Entity\Comment:
             unsigned: false
             comment: ''
         commentDate:
-            type: date
+            type: datetime
             nullable: false
             comment: ''
             column: comment_date

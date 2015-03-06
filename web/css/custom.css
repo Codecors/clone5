@@ -17,33 +17,54 @@ and open the template in the editor.
 
 .post-content{
     margin: 0;
+    font-size: 16px;
 }
 
 .post-date{
     margin: 0;
+    display: inline;
+    font-size: 12px;
+    padding-left: 5px;
+    color: #cccccc;
 }
 
 .post-likes{
     margin: 0;
+    margin-right: 0;
+    display: inline;
+    float: right;
 }
 .post-user{
-    margin: 0;
-    background-color: #6d6;
+    width: auto;
+    margin-left: 0;
+    display: inline;
+    
+    font-weight: bold;
+    text-shadow: 1px 1px 4px black;
+}
+
+.post-view{
+    display: inline;
+    
+    float: right;
+    margin-right: 10%;
 }
 
 .comment{
     display: block;
-    border: solid black 1px;
-    margin: 5px auto;
-    width: 30vw;
+    margin-top: 2px;
 }
 
 .comment-content{
     margin: 0;
+    padding-left: 20px;
 }
 
 .comment-date{
     margin: 0;
+    display: inline;
+    float: right;
+    font-size: 12px;
 }
 
 .comment-likes{
@@ -51,5 +72,20 @@ and open the template in the editor.
 }
 .comment-user{
     margin: 0;
-    background-color: #08C;
+    display: inline;
+    font-size: 16px;
+    color: white;
+    font-weight: bold;
+}
+
+.top-margin-nav{
+    margin-top: 64px;
+}
+.panel-comment{
+    background-color: #1e2023;
+}
+
+.center-screen-login{
+    margin-top: 30vh;
+    
 }
