@@ -1,4 +1,26 @@
-<h1>Hello MiRAGE!</h1>
+{# empty Twig template #}
+{% include "G6FriendsBundle::header.html.twig" with {'title': 'Welcome to Friends','user':'','isLogin': 0} %}
 
-<a href="{{ path('g6_friends_register') }}">Reg</a>
-<a href="{{ path('g6_friends_login') }}">Log</a>
+<div class="center-screen-login"></div>
+<div class="row">
+    <div class="col-lg-1"></div>
+    <div class="col-lg-10">
+
+
+        <div class="bs-component">
+            <div class="jumbotron">
+                <div class="container">
+                    <h1 class="text-center">Welcome to G6 Friends</h1>
+                    <p class="text-center">Please register to access the <strong>G6 Friends</strong> or Login to continue.</p>
+                    <p class="text-center">
+                        <a class="btn btn-primary btn-lg" href="{{ path('g6_friends_register') }}">Register</a>
+                        <a class="btn btn-primary btn-lg" href="{{ path('g6_friends_login') }}">Login</a>                    
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+ {% include "G6FriendsBundle::footer.html.twig" %}

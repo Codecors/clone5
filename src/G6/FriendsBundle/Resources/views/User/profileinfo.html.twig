@@ -6,7 +6,7 @@
     <div class="col-lg-3"></div>
     <div class="col-lg-6">
         <div class="well bs-component">
-            <form class="form-horizontal" action="profile_info" method="POST">
+            <form name="updateForm" class="form-horizontal" action="profile_info" method="POST" onsubmit="return validateUpdateInfoForm();">
                 <fieldset>
                     <legend>Profile Information</legend>               
                     <div class="form-group">
@@ -27,14 +27,14 @@
                         </div>
                     </div>#}
 
-                    <div class="form-group">
+                    <div id="fgFirstname" class="form-group">
                         <label for="inputFirstname" class="col-lg-2 control-label">First Name</label>
                         <div class="col-lg-10">
                             <input type="text" class="form-control" name="firstname" placeholder="First Name" value="{{user.firstname}}">
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div id="fgLastname" class="form-group">
                         <label for="inputLastname" class="col-lg-2 control-label">Last Name</label>
                         <div class="col-lg-10">
                             <input type="text" class="form-control" name="lastname" placeholder="Last Name" value="{{user.lastname}}">
@@ -81,6 +81,12 @@
     </div>
 </div>
 
+<div class="row">
+    <div class="col-lg-4"></div>
+    <div id="validateError" class="col-lg-4">
+
+    </div>
+</div> 
 
 {% if error==1 %}
     <div class="row">
@@ -97,7 +103,7 @@
     <div class="row">
         <div class="col-lg-4"></div>
         <div class="col-lg-4">
-            <div class="alert alert-dismissible alert-info"> 
+            <div class="alert alert-dismissible alert-success"> 
 
                 <p class="text-center"><strong>Update Success.</strong></p>
 
@@ -107,10 +113,60 @@
 {% endif %}
 
 
-{{dump(user)}}
+{#{{dump(user)}}#}
 
 {#{% if  error == 1 %}
     {{ errorMsg }}
 {% elseif success==1 %}
     Register Success
 {% endif %}#}
+
+<script>
+
+    function validateUpdateInfoForm() {
+
+        var firstname = document.forms["updateForm"]["firstname"].value;
+        var lastname = document.forms["updateForm"]["lastname"].value;
+        var error = 0;
+
+        if (lastname === null || lastname === "") {
+            var fgLastname = document.getElementById("fgLastname");
+            fgLastname.className += " has-error";
+            showValidateError('Please enter the Last Name.');
+            error = 1;
+        }
+
+        if (firstname === null || firstname === "") {
+            var fgFirstname = document.getElementById("fgFirstname");
+            fgFirstname.className += " has-error";
+            showValidateError('Please enter the First Name.');
+            error = 1;
+        }
+
+        if (error === 1)
+        {
+            return false;
+        }
+
+    }
+
+    function showValidateError(message) {
+
+        var errorBox = document.getElementById("validateError");
+        var messegeHTML = '<div class="alert alert-dismissible alert-danger"> <p class="text-center"><strong>' + message + '</strong></p> </div>';
+        errorBox.innerHTML = messegeHTML;
+
+    }
+
+    function hideValidateError(message) {
+
+        var errorBox = document.getElementById("validateError");
+        var messegeHTML = '';
+        errorBox.innerHTML = messegeHTML;
+
+    }
+
+</script>
+
+
+{% include "G6FriendsBundle::footer.html.twig" %}

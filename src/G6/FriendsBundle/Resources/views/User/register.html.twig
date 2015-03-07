@@ -7,37 +7,37 @@
         <div class="col-lg-3"></div>
         <div class="col-lg-6">
             <div class="well bs-component">
-                <form class="form-horizontal" action="register" method="POST">
+                <form class="form-horizontal" name="registerForm" action="register" onsubmit="return validateRegisterForm();" method="POST">
                     <fieldset>
                         <legend>Register</legend>
-                        <div class="form-group">
+                        <div id="fgUsername" class="form-group">
                             <label for="inputUsername" class="col-lg-2 control-label">Username</label>
                             <div class="col-lg-10">
                                 <input type="text" class="form-control" name="username" placeholder="Username">
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div id="fgPassword" class="form-group">
                             <label for="inputPassword" class="col-lg-2 control-label">Password</label>
                             <div class="col-lg-10">
                                 <input type="text" class="form-control" name="password" placeholder="Password">                           
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div id="fgRePassword" class="form-group">
                             <label for="inputRePassword" class="col-lg-2 control-label"></label>
                             <div class="col-lg-10">
                                 <input type="text" class="form-control" name="repassword" placeholder="Re-enter Password">                           
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div id="fgFirstname" class="form-group">
                             <label for="inputFirstname" class="col-lg-2 control-label">First Name</label>
                             <div class="col-lg-10">
                                 <input type="text" class="form-control" name="firstname" placeholder="First Name">
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div id="fgLastname" class="form-group">
                             <label for="inputLastname" class="col-lg-2 control-label">Last Name</label>
                             <div class="col-lg-10">
                                 <input type="text" class="form-control" name="lastname" placeholder="Last Name">
@@ -85,6 +85,13 @@
     </div>
 {% endif %}
 
+<div class="row">
+    <div class="col-lg-4"></div>
+    <div id="validateError" class="col-lg-4">
+
+    </div>
+</div> 
+
 {% if error==1 %}
     <div class="row">
         <div class="col-lg-4"></div>
@@ -101,7 +108,7 @@
     <div class="row">
         <div class="col-lg-4"></div>
         <div class="col-lg-4">
-            <div class="alert alert-dismissible alert-info"> 
+            <div class="alert alert-dismissible alert-success"> 
 
                 <p class="text-center"><strong>Register Success.Please <a href="{{ path('g6_friends_login') }}">Login</a> To Continue</strong></p>
 
@@ -110,7 +117,6 @@
     </div> 
 {% endif %}
 
-
 {#{{dump(data)}}#}
 
 {#{% if  error == 1 %}
@@ -118,3 +124,79 @@
 {% elseif success==1 %}
     Register Success
 {% endif %}#}
+
+<script>
+
+    function validateRegisterForm() {
+        var username = document.forms["registerForm"]["username"].value;
+        var password = document.forms["registerForm"]["password"].value;
+        var repassword = document.forms["registerForm"]["repassword"].value;
+        var firstname = document.forms["registerForm"]["firstname"].value;
+        var lastname = document.forms["registerForm"]["lastname"].value;
+        var error=0;
+        
+        if (password !== repassword) {                    
+            var fgPassword = document.getElementById("fgPassword"); 
+            var fgRePassword = document.getElementById("fgRePassword");  
+            fgPassword.className += " has-error";
+            fgRePassword.className += " has-error";
+            showValidateError('Password mismatch.');
+            error=1;
+        }
+        
+        if (username === null || username === "") {                    
+            var fgUsername = document.getElementById("fgUsername");       
+            fgUsername.className += " has-error";
+            showValidateError('Please fill the required fields.');
+            error=1;
+        }
+        
+        if (password === null || password === "") {                    
+            var fgPassword = document.getElementById("fgPassword");       
+            fgPassword.className += " has-error";
+            showValidateError('Please fill the required fields.');
+            error=1;
+        }
+        
+        if (firstname === null || firstname === "") {                    
+            var fgFirstname = document.getElementById("fgFirstname");       
+            fgFirstname.className += " has-error";
+            showValidateError('Please fill the required fields.');
+            error=1;
+        }
+        
+        if (lastname === null || lastname === "") {                    
+            var fgLastname = document.getElementById("fgLastname");       
+            fgLastname.className += " has-error";
+            showValidateError('Please fill the required fields.');
+            error=1;
+        }
+        
+                
+        if(error ===1)
+        {
+            return false;
+        }
+        
+    }
+
+    function showValidateError(message) {
+
+        var errorBox = document.getElementById("validateError");
+        var messegeHTML ='<div class="alert alert-dismissible alert-danger"> <p class="text-center"><strong>'+message+'</strong></p> </div>';
+        errorBox.innerHTML=messegeHTML;
+
+    }
+    
+    function hideValidateError(message) {
+
+        var errorBox = document.getElementById("validateError");
+        var messegeHTML ='';
+        errorBox.innerHTML=messegeHTML;
+
+    }
+
+</script>
+
+
+{% include "G6FriendsBundle::footer.html.twig" %}

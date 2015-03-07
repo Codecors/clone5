@@ -10,8 +10,8 @@
                 <div class="panel-heading">
                     <h3 class="panel-title post-user">{{post['user'].firstName}} {{post['user'].lastName}}</h3> 
                     <p class="post-date">{{post['post_date']|  date('Y-m-d')}} at {{post['post_date']|  date('h:i:s a')}}</p>                   
-                    <p class="post-likes">{{post['post_likes']}}</p>
-                    <a class="post-view" href="{{ path('g6_friends_post',{'id':post['post_id']}) }}">View </a>
+                    <p class="post-likes">{{post['post_likes']}} Likes</p>
+                    <a class="btn btn-default btn-xs post-view" href="{{ path('g6_friends_post',{'postId':post['post_id']}) }}">View </a>
                 </div>
                 <div class="panel-body">
                     <p class="post-content">{{post['post_content']}}</p>

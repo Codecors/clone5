@@ -24,6 +24,11 @@ class UserController extends Controller {
         $user = null;
         $error = 0;
         $errorMsg = '';
+        $sessionUser = CommonMethods::getSession();
+        if (isset($sessionUser['username'])) {
+
+            return $this->redirect($this->generateUrl('g6_friends_user', array('name' => $sessionUser['username'])));
+        }
 
         if ($request->getMethod() == 'POST') {
             $requestData = $request->request->all();
@@ -37,8 +42,9 @@ class UserController extends Controller {
             $user = $userRepository->findOneByUsername($requestData['username']);
 
             if (isset($user) && $user->getPassword() == $requestData['password']) {
-                CommonMethods::setSession('username', $user->getUsername(), 'name', $user->getFirstName() . ' ' . $user->getLastName());
-                return $this->redirect('user/' . $user->getUsername());
+                $sessionUser['session']->set('username', $user->getUsername());
+                $sessionUser['session']->set('name', $user->getFirstName() . ' ' . $user->getLastName());
+                return $this->redirect($this->generateUrl('g6_friends_user', array('name' => $user->getUsername())));
             } else {
                 $error = 1;
                 $errorMsg = 'Username or Password is not found';
@@ -53,6 +59,11 @@ class UserController extends Controller {
         $error = 0;
         $errorMsg = '';
         $success = 0;
+        $sessionUser = CommonMethods::getSession();
+        if (isset($sessionUser['username'])) {
+
+            return $this->redirect($this->generateUrl('g6_friends_user', array('name' => $sessionUser['username'])));
+        }
         if ($request->getMethod() == 'POST') {
             $requestData = $request->request->all();
 

@@ -7,11 +7,11 @@
     <div class="col-lg-1"></div>
     <div class="col-lg-10">
         <div class="well bs-component">
-            <form class="form-horizontal" action="newpost" method="POST">
+            <form name="postForm" class="form-horizontal" action="newpost" method="POST" onsubmit="return validatePostForm();">
                 <fieldset>
                     <legend>Write a new post</legend>
-
-                    <div class="form-group">
+                    <label id="emptyPost" class="label"> </label>
+                    <div id="fgPost" class="form-group">
 
                         <div class="col-lg-12">
                             <textarea class="form-control" name="post_content" rows="10"></textarea>
@@ -21,7 +21,9 @@
 
                     <div class="form-group">
 
-                        <div class="col-lg-3 col-lg-offset-11">                           
+
+                        <div class="col-lg-3 col-lg-offset-11">  
+
                             <button type="submit" class="btn btn-primary">Post</button>
                         </div>
 
@@ -38,13 +40,51 @@
         <div class="col-lg-4"></div>
         <div class="col-lg-4">
             <div class="alert alert-dismissible alert-success"> 
-                
+
                 <p class="text-center"><strong>Post successfull</strong></p>
-                
+
             </div>
         </div>
     </div> 
 {% endif %}
 
 {#{{dump(data)}}#}
+<script>
+    function validatePostForm() {
+
+        var post_content = document.forms["postForm"]["post_content"].value;
+        var error = 0;
+
+        if (post_content === null || post_content === "") {
+            var fgPost = document.getElementById("fgPost");
+            fgPost.className += " has-warning";
+            showValidateError('Please enter something.');
+            error = 1;
+        }
+
+        if (error === 1)
+        {
+            return false;
+        }
+
+    }
+
+    function showValidateError(message) {
+
+        var errorBox = document.getElementById("emptyPost");
+        var messegeHTML = message;
+        errorBox.className = "label label-warning";
+        errorBox.innerHTML = messegeHTML;
+
+    }
+
+    function hideValidateError(message) {
+
+        var errorBox = document.getElementById("emptyPost");
+        var messegeHTML = '';
+        errorBox.className = "";
+        errorBox.innerHTML = messegeHTML;
+
+    }
+</script>
 {% include "G6FriendsBundle::footer.html.twig" %}

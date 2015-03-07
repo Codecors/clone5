@@ -8,6 +8,10 @@ and open the template in the editor.
     Author     : Mirage
 */
 
+body{
+    overflow-x: hidden;
+}
+
 .post{
     display: block;
     border: solid black 1px;
@@ -33,19 +37,20 @@ and open the template in the editor.
     margin-right: 0;
     display: inline;
     float: right;
+    width: 12%;
 }
 .post-user{
     width: auto;
     margin-left: 0;
     display: inline;
-    
+
     font-weight: bold;
     text-shadow: 1px 1px 4px black;
 }
 
 .post-view{
     display: inline;
-    
+
     float: right;
     margin-right: 10%;
 }
@@ -87,5 +92,24 @@ and open the template in the editor.
 
 .center-screen-login{
     margin-top: 30vh;
+
+}
+
+.comment-form{
+    margin-bottom: -10;
+
+}
+
+.footer-custom{
+    width:100%;
+    height:20px;
+    position: fixed;
+    bottom:0;
+    left:0;
     
+}
+
+#footer-text{
+    color: #666666;
+    background-color: #1e2023;
 }

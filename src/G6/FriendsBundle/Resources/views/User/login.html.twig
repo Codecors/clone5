@@ -1,5 +1,5 @@
 {# empty Twig template #}
-{% include "G6FriendsBundle::header.html.twig" with {'title': 'Login','user':'h','isLogin': 0} %}
+{% include "G6FriendsBundle::header.html.twig" with {'title': 'Login','user':'','isLogin': 0} %}
 
 <div class="center-screen-login"></div>
 
@@ -8,16 +8,16 @@
     <div class="col-lg-3"></div>
     <div class="col-lg-6">
         <div class="well bs-component">
-            <form class="form-horizontal" action="login" method="POST">
+            <form name="loginForm" class="form-horizontal" action="login" method="POST" onsubmit="return validateLoginForm();">
                 <fieldset>
                     <legend>Login</legend>
-                    <div class="form-group">
+                    <div id="fgUsername" class="form-group">
                         <label for="inputUsername" class="col-lg-2 control-label">Username</label>
                         <div class="col-lg-10">
                             <input type="text" class="form-control" name="username" placeholder="Username">
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div id="fgPassword" class="form-group">
                         <label for="inputPassword" class="col-lg-2 control-label">Password</label>
                         <div class="col-lg-10">
                             <input type="text" class="form-control" name="password" placeholder="Password">
@@ -36,6 +36,13 @@
     </div>
 </div>
 
+<div class="row">
+    <div class="col-lg-4"></div>
+    <div id="validateError" class="col-lg-4">
+
+    </div>
+</div> 
+
 {% if error==1 %}
     <div class="row">
         <div class="col-lg-4"></div>
@@ -51,6 +58,50 @@
 
 {#{{dump(data)}}#}
 
+<script>
+    function validateLoginForm() {
+
+        var username = document.forms["loginForm"]["username"].value;
+        var password = document.forms["loginForm"]["password"].value;
+        var error = 0;
+      
+        if (password === null || password === "") {
+            var fgPassword = document.getElementById("fgPassword");
+            fgPassword.className += " has-error";
+            showValidateError('Please enter the Password.');
+            error = 1;
+        }
+        
+        if (username === null || username === "") {
+            var fgUsername = document.getElementById("fgUsername");
+            fgUsername.className += " has-error";
+            showValidateError('Please enter the Username.');
+            error = 1;
+        }
+
+        if (error === 1)
+        {
+            return false;
+        }
+
+    }
+
+     function showValidateError(message) {
+
+        var errorBox = document.getElementById("validateError");
+        var messegeHTML ='<div class="alert alert-dismissible alert-danger"> <p class="text-center"><strong>'+message+'</strong></p> </div>';
+        errorBox.innerHTML=messegeHTML;
+
+    }
+    
+    function hideValidateError(message) {
+
+        var errorBox = document.getElementById("validateError");
+        var messegeHTML ='';
+        errorBox.innerHTML=messegeHTML;
+
+    }
+</script>
 
 
 {% include "G6FriendsBundle::footer.html.twig" %}

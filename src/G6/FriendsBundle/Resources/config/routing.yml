@@ -27,7 +27,7 @@ g6_friends_public_wall:
     defaults: { _controller: G6FriendsBundle:Default:wall }
     
 g6_friends_post:
-    path:     /post/{id}
+    path:     /post/{postId}
     defaults: { _controller: G6FriendsBundle:Post:view }
     
 g6_friends_profile_info:

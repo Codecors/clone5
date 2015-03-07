@@ -31,7 +31,7 @@ class CommonMethods {
                 isset($requestData['lastname']) &&
                 isset($requestData['gender']));
     }
-    
+
     static function validateUpdate($requestData) {
         return (isset($requestData['birthdate']) &&
                 isset($requestData['firstname']) &&
@@ -39,7 +39,7 @@ class CommonMethods {
                 isset($requestData['gender']));
     }
 
-    static function setSession($attrUser, $valueUser,$attrName, $valueName) {
+    static function setSession($attrUser, $valueUser, $attrName, $valueName) {
         $session = new Session();
         $session->start();
         $session->set($attrUser, $valueUser);
@@ -49,7 +49,7 @@ class CommonMethods {
     static function getSession() {
         $session = new Session();
         $session->start();
-        return array('username'=>$session->get('username'),'name'=>$session->get('name'),'session'=> $session);
+        return array('username' => $session->get('username'), 'name' => $session->get('name'), 'session' => $session);
     }
 
     static function postsToArray($postCollection) {
@@ -79,10 +79,39 @@ class CommonMethods {
         return $finalPostArray;
     }
 
-    static function getUserByUsername($username,$controller) {
+    static function postObjectToArray($postObject) {
+
+        $comments = array();
+        foreach ($postObject->getComment() as $comment) {
+            $commentdata = array('comment_id' => $comment->getCommentId(),
+                'comment_content' => $comment->getContent(),
+                'comment_likes' => $comment->getLikes(),
+                'comment_date' => $comment->getCommentDate(),
+                'user' => $comment->getUser()
+            );
+            array_push($comments, $commentdata);
+        }
+
+        $postdata = array('post_id' => $postObject->getPostid(),
+            'post_content' => $postObject->getPostContent(),
+            'post_date' => $postObject->getPostDate(),
+            'post_likes' => $postObject->getLikes(),
+            'user' => $postObject->getUser(),
+            'comments' => $comments);
+
+        return $postdata;
+    }
+
+    static function getUserByUsername($username, $controller) {
         $userRepository = $controller->getDoctrine()->getRepository('G6FriendsBundle:User');
         $existingUser = $userRepository->findOneByUsername($username);
         return $existingUser;
+    }
+    
+    static function getPostByID($postID, $controller) {
+        $postRepository = $controller->getDoctrine()->getRepository('G6FriendsBundle:Post');
+        $existingPost = $postRepository->findOneByPostId($postID);
+        return $existingPost;
     }
 
 }
